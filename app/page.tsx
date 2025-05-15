@@ -1,103 +1,160 @@
-import Image from "next/image";
+// "use client"
+// import { useState } from "react";
+
+// export default function Home() {
+//   const [num1, setNum1] = useState<string>("");
+//   const [num2, setNum2] = useState<string>("");
+//   const [operation, setOperation] = useState("+");
+//   const [result, setResult] = useState<number | string>(0);
+
+//   const calculateResult = () => {
+//     const value1 = num1 === "" ? 0 : parseFloat(num1);
+//     const value2 = num2 === "" ? 0 : parseFloat(num2);
+
+//     switch (operation) {
+//       case "+":
+//         setResult(value1 + value2);
+//         break;
+//       case "-":
+//         setResult(value1 - value2);
+//         break;
+//       case "*":
+//         setResult(value1 * value2);
+//         break;
+//       case "/":
+//         setResult(value2 !== 0 ? value1 / value2 : "can divide by 0");
+//         break;
+//       default:
+//         setResult(0)
+//     }
+//   }
+
+//   return (
+//     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-200 p-4">
+//       <div className="bg-white shadow-md p-6 rounded-lg w-full max-w-md">
+//         <h1 className="font-bold text-center mb-6 text-2xl">Calculator</h1>
+//         <div className="mb-4">
+//           <label className="block text-gray-700 mb-2">Number 1:</label>
+//           <input 
+//             type="number"
+//             value={num1}
+//             onChange={(e) => setNum1(e.target.value)}
+//             className="w-full p-2 border border-gray-300 rounded"
+//           />
+//         </div>
+
+//         <div className="mb-4">
+//           <label className="block text-gray-700 mb-2">Operation:</label>
+//           <select
+//             value={operation}
+//             onChange={(e) => setOperation(e.target.value)}
+//             className="w-full p-2 border border-gray-300 rounded"
+//           >
+//             <option value="+">+</option>
+//             <option value="-">-</option>
+//             <option value="*">*</option>
+//             <option value="/">/</option>
+//           </select>
+//         </div>  
+        
+//         <div className="mb-4">
+//           <label className="block text-gray-700 mb-2">Number 2:</label>
+//           <input 
+//             type="number"
+//             value={num2}
+//             onChange={(e) => setNum2(e.target.value)}
+//             className="w-full p-2 border border-gray-300 rounded"
+//           />
+//         </div>
+
+//         <button
+//           onClick={calculateResult}
+//           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mb-4"
+//         >Calculate
+//         </button>
+
+//         <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+//           <div className="text-lg font-medium">Result:</div>
+//           <div className="text-2xl font-bold mt-2">{result}</div>
+//         </div>
+//       </div>  
+//     </div>
+//   )
+// }
+
+"use client"
+import { useState } from "react"
+import { serialize } from "v8";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [num1, setNum1] = useState<string>("");
+  const [num2, setNum2] = useState<string>("");
+  const [operation, setOperation] = useState("+");
+  const [result, setResult] = useState<number | string>("");
+  
+  const calculateResult = () => {
+    const v1 = num1 === "" ? 0 : parseFloat(num1);
+    const v2 = num2 === "" ? 0 : parseFloat(num2);
+    switch(operation) {
+      case "+":
+        setResult(v1 + v2);
+        break;
+      case "-":
+        setResult(v1 - v2);
+        break;
+      case "*":
+        setResult(v1 * v2);
+        break;
+      case "/":
+        setResult(v1 / v2);
+        break;
+      default:
+        setResult(0);
+    }
+  }
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="flex flex-col justify-center items-center bg-pink-200 min-h-screen p-2">
+      <div className="w-full bg-white max-w-md p-3">
+        <h1 className="text-center font-bold text-2xl">Calculator</h1>
+        <div className="mb-4">
+        <label className="block p-2 font-bold text-xl">Number 1:</label>
+        <input 
+          type="number"
+          value={num1}
+          onChange={(e) => setNum1(e.target.value)}
+          className="w-full border border-pink-200 p-2"    
+        />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="mb-4">
+          <select className="w-full border border-pink-200 p-2">
+            <option value="+">plus(+)</option>
+            <option value="-">minus(-)</option>
+            <option value="*">multiply(*)</option>
+            <option value="/">divide(/)</option>
+          </select>
+        </div>
+
+        <div className="mb-4">
+        <label className="block p-2 font-bold text-xl">Number 2:</label>
+        <input 
+          type="number"
+          value={num2}
+          onChange={(e) => setNum2(e.target.value)}
+          className="w-full border border-pink-200 p-2"    
+        />
+        </div>
+
+        <button 
+        onClick={calculateResult}
+        className="bg-blue-400 w-full hover:bg-blue-500 p-2 text-white text-xl font-bold">
+          Calculate
+        </button>
+
+        <div className="font-bold p-3 text-xl">Result:</div>
+        <div className="font-bold p-3 text-2xl">{result}</div>
+      </div>
     </div>
-  );
+  )
 }
