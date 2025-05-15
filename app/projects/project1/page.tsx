@@ -127,7 +127,10 @@ export default function Home() {
         </div>
 
         <div className="mb-4">
-          <select className="w-full border border-pink-200 p-2">
+          <select 
+            value={operation}
+            onChange={(e) => setOperation(e.target.value)}
+            className="w-full border border-pink-200 p-2" >
             <option value="+">plus(+)</option>
             <option value="-">minus(-)</option>
             <option value="*">multiply(*)</option>
